@@ -6,11 +6,13 @@
     "module": "commonjs",
     "baseUrl": "./src",
     "paths": {
-      // "@modules/*": ["modules/*"],
-      // "@erros/*": ["erros/*"],
-      // "@configs/*": ["configs/*"],
-      // "@shared/*": ["shared/*"],
-      // "@utils/*": ["utils/*"]
+      "@controllers/*": ["controllers/*"],
+      "@dtos/*": ["dtos/*"],
+      "@repositories/*": ["repositories/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@entities/*": ["entities/*"]
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
