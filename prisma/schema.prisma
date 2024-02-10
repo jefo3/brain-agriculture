@@ -6,3 +6,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Producer {
+  id String @id @default(uuid())
+  cpfCnpj String @map("cpf_cnpj")
+  nameProducer String @map("name_producer")
+  nameFarm String @map("name_farm")
+  city String
+  state String
+  totalFarmArea Decimal @db.Decimal(10, 2) @map("total_farm_area")
+  agriculturalArea Decimal @db.Decimal(10, 2) @map("agricultural_area")
+  vegetationArea Decimal @db.Decimal(10, 2) @map("vegetation_area")
+  plantedCrops Crop[] @map("planted_crops") @default([])
+
+  createdAt DateTime  @default(now()) @map("creadted_at")
+  updatedAt DateTime? @default(now()) @map("update_at")
+
+  @@map("producers")
+}
+
+enum Crop {
+  soja 
+  milho
+  algodao 
+  cafe 
+  canaDeAcucar @map("cana_de_acucar")
+}
