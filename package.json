@@ -6,13 +6,15 @@
   "author": "jefo3 <jeferson.goncalves.noronha@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts --watch",
+    "start:dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts --watch",
     "start:main": "src/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "reflect-metadata": "^0.2.1",
     "tsyringe": "^4.8.0"
   },
   "devDependencies": {
