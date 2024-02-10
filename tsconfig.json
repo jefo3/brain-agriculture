@@ -12,7 +12,8 @@
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
-      "@entities/*": ["entities/*"]
+      "@entities/*": ["entities/*"],
+      "@shared/*": ["shared/*"]
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
