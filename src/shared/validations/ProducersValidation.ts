@@ -1,6 +1,6 @@
 import { Joi, Segments } from "celebrate";
 
-import { Crop } from "../../models/Enums/crop";
+import { Crop } from "@prisma/client";
 
 const createProducerSchema = {
   [Segments.BODY]: Joi.object().keys({
