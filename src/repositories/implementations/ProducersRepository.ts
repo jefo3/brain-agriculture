@@ -56,4 +56,14 @@ export class ProducersRepository implements IProducerRepository {
 
     return producer;
   }
+
+  async getProducerById(id: string): Promise<Producer> {
+    const producer = await this.prisma.producer.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return producer;
+  }
 }

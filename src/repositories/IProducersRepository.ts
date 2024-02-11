@@ -13,4 +13,5 @@ export interface IProducerRepository {
   delete(id: string): Promise<Producer>;
   update({ data, id }: IUpdate): Promise<Producer>;
   getProducerByCpforCnpj(cpfCnpj: string): Promise<Producer>;
+  getProducerById(id: string): Promise<Producer>;
 }

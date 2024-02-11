@@ -12,4 +12,5 @@ export class UpdateProducerDTO implements TUpdateProducer {
   agriculturalArea?: number;
   vegetationArea?: number;
   plantedCrops?: [] | $Enums.Crop[];
+  updatedAt?: Date;
 }
