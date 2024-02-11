@@ -2,6 +2,8 @@ import { CreateProducerDTO } from "@dtos/createProducerDTO";
 import { Producer } from "@entities/ProducerEntity";
 import { PrismaClient } from "@prisma/client";
 import {
+  IGroupByCrop,
+  IGroupByState,
   IProducerRepository,
   IUpdate,
 } from "@repositories/IProducersRepository";
@@ -65,5 +67,58 @@ export class ProducersRepository implements IProducerRepository {
     });
 
     return producer;
+  }
+
+  async getTotalNumberOfFarms(): Promise<number> {
+    const totalFarms = await this.prisma.producer.count();
+    return totalFarms;
+  }
+
+  async getTotalAreaOfFarms(): Promise<number> {
+    const totalArea = await this.prisma.producer.aggregate({
+      _sum: {
+        totalFarmArea: true,
+      },
+    });
+
+    return totalArea._sum.totalFarmArea.toNumber();
+  }
+
+  async getGroupByState(): Promise<IGroupByState[]> {
+    const groupByStates = await this.prisma.producer.groupBy({
+      by: ["state"],
+      _count: true,
+      orderBy: {
+        _count: {
+          state: "desc",
+        },
+      },
+    });
+
+    return groupByStates;
+  }
+
+  async getGroupByCrop(): Promise<IGroupByCrop[]> {
+    const groupByCrops = await this.prisma.producer.groupBy({
+      by: "plantedCrops",
+      _count: true,
+    });
+
+    return groupByCrops;
+  }
+
+  async getAreaLandUse(): Promise<number> {
+    const areaLanUse = await this.prisma.producer.aggregate({
+      _sum: {
+        agriculturalArea: true,
+        vegetationArea: true,
+      },
+    });
+
+    const total =
+      areaLanUse._sum.agriculturalArea.toNumber() +
+      areaLanUse._sum.vegetationArea.toNumber();
+
+    return total;
   }
 }

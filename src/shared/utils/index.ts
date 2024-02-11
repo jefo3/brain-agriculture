@@ -39,3 +39,7 @@ export const isFarmAreasValid = ({
 }: IProps): boolean => {
   return agriculturalArea + vegetationArea <= farmArea;
 };
+
+export const formatPercentage = (value: number): number => {
+  return Number((value * 100).toFixed(2));
+};

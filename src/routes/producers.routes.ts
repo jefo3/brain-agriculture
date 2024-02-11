@@ -17,4 +17,6 @@ producerRoutes.get("/", producerController.list);
 producerRoutes.delete("/:id", producerController.delete);
 producerRoutes.put("/:id", producerController.update);
 
+producerRoutes.get("/dashboard", producerController.dashboard);
+
 export { producerRoutes };

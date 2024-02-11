@@ -4,6 +4,7 @@ import { container } from "tsyringe";
 import { CreateProducerDTO } from "@dtos/createProducerDTO";
 import { UpdateProducerDTO } from "@dtos/updateProducerDTO";
 import { CreateProducerService } from "@services/producer/CreateProducerService";
+import { DashboardProducerService } from "@services/producer/DashboardProducerService";
 import { DeleteProducerService } from "@services/producer/DeleteProducerService";
 import { ListProducerService } from "@services/producer/ListProducerService";
 import { UpdateProducerService } from "@services/producer/UpdateProducerService";
@@ -67,6 +68,23 @@ export class ProducerController {
 
       return response.status(200).json({
         message: "User updated",
+        data: producer,
+      });
+    } catch (err) {
+      return response.status(400).send(err.message);
+    }
+  }
+
+  async dashboard(request: Request, response: Response) {
+    try {
+      const dashboardProducerService = container.resolve(
+        DashboardProducerService,
+      );
+
+      const producer = await dashboardProducerService.execute();
+
+      return response.status(200).json({
+        message: "Dashboard of producers",
         data: producer,
       });
     } catch (err) {
