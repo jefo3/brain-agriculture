@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { CreateProducerDTO } from "@dtos/createProducerDTO";
 import { IProducerRepository } from "@repositories/IProducersRepository";
+import { valitadeCpfOrCnpj } from "@shared/utils";
 
 @injectable()
 export class CreateProducerService {
@@ -11,6 +12,8 @@ export class CreateProducerService {
   ) {}
 
   async execute(data: CreateProducerDTO) {
+    valitadeCpfOrCnpj(data.cpfCnpj);
+
     const producerAlreadyExists =
       await this.producersRepository.getProducerByCpforCnpj(data.cpfCnpj);
 
