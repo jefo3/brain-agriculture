@@ -26,3 +26,16 @@ export const valitadeCpfOrCnpj = (cpfCnpj: string): void => {
       throw new Error("CPF/CNPJ invalid");
   }
 };
+interface IProps {
+  farmArea: number;
+  agriculturalArea: number;
+  vegetationArea: number;
+}
+
+export const isFarmAreasValid = ({
+  farmArea,
+  agriculturalArea,
+  vegetationArea,
+}: IProps): boolean => {
+  return agriculturalArea + vegetationArea <= farmArea;
+};
