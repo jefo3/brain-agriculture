@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "@errors/AppError";
 import { IProducerRepository } from "@repositories/IProducersRepository";
 
 @injectable()
@@ -14,7 +15,7 @@ export class DeleteProducerService {
       await this.producersRepository.getProducerById(id);
 
     if (!producerAlreadyExists) {
-      throw new Error("Producer Not Exists");
+      throw new AppError("Producer Not Exists");
     }
 
     const producer = await this.producersRepository.delete(id);

@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { UpdateProducerDTO } from "@dtos/updateProducerDTO";
+import { AppError } from "@errors/AppError";
 import {
   IProducerRepository,
   IUpdate,
@@ -21,7 +22,7 @@ export class UpdateProducerService {
       await this.producersRepository.getProducerById(id);
 
     if (!producerAlreadyExists) {
-      throw new Error("Producer Not Exists");
+      throw new AppError("Producer Not Exists");
     }
 
     const farmArea =
@@ -40,8 +41,9 @@ export class UpdateProducerService {
     });
 
     if (!farmAreasIsValid) {
-      throw new Error(
+      throw new AppError(
         "agriculturalArea next to vegetationArea cannot be greater than the total area of the farm",
+        422,
       );
     }
 

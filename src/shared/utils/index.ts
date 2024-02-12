@@ -1,5 +1,7 @@
 import { cpf, cnpj } from "cpf-cnpj-validator";
 
+import { AppError } from "@errors/AppError";
+
 const validateCPF = (cpfString: string): boolean => {
   return cpf.isValid(cpfString);
 };
@@ -14,16 +16,16 @@ export const valitadeCpfOrCnpj = (cpfCnpj: string): void => {
   switch (cpfCnpjLength) {
     case 11:
       if (!validateCPF(cpfCnpj)) {
-        throw new Error("CPF invalid");
+        throw new AppError("CPF invalid", 422);
       }
       break;
     case 14:
       if (!validateCNPJ(cpfCnpj)) {
-        throw new Error("CNPJ invalid");
+        throw new AppError("CNPJ invalid", 422);
       }
       break;
     default:
-      throw new Error("CPF/CNPJ invalid");
+      throw new AppError("CPF/CNPJ invalid", 422);
   }
 };
 interface IProps {

@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { CreateProducerDTO } from "@dtos/createProducerDTO";
+import { AppError } from "@errors/AppError";
 import { IProducerRepository } from "@repositories/IProducersRepository";
 import { isFarmAreasValid, valitadeCpfOrCnpj } from "@shared/utils";
 
@@ -21,7 +22,7 @@ export class CreateProducerService {
     });
 
     if (!farmAreasIsValid) {
-      throw new Error(
+      throw new AppError(
         "agriculturalArea next to vegetationArea cannot be greater than the total area of the farm",
       );
     }
@@ -30,7 +31,7 @@ export class CreateProducerService {
       await this.producersRepository.getProducerByCpforCnpj(data.cpfCnpj);
 
     if (producerAlreadyExists) {
-      throw new Error("Producer already exists");
+      throw new AppError("Producer already exists");
     }
 
     const producer = this.producersRepository.create(data);
