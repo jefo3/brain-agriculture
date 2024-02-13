@@ -1,8 +1,16 @@
 import "reflect-metadata";
 
-import { CreateProducerDTO } from "@dtos/createProducerDTO";
+import { AppError } from "@errors/AppError";
 import { CreateProducerService } from "@services/producer/CreateProducerService";
 
+import {
+  producerInputCreateMockAreaFarmInvalid,
+  producerInputCreateMockCNPJInvalid,
+  producerInputCreateMockCpfInvalid,
+  producerInputCreateMockCPForCNPJIncomplete,
+  producerInputCreateMockSucess,
+  producerOutputCreateMockSucess,
+} from "./mocks/producerCreateMockData";
 import { ProducerRepositoryMock } from "./mocks/ProducerRepositoryMock";
 
 describe("Create producer", () => {
@@ -23,43 +31,18 @@ describe("Create producer", () => {
   });
 
   it("Shold be able to create a new producer", async () => {
-    const producerInputMock: CreateProducerDTO = {
-      cpfCnpj: "928.311.890-12",
-      nameProducer: "prucer mock",
-      nameFarm: "fazeenda mock",
-      city: "São paulo",
-      state: "São paulo",
-      totalFarmArea: 2000,
-      agriculturalArea: 1000,
-      vegetationArea: 1000,
-      plantedCrops: ["soja"],
-    };
-
-    const producerOutputMock = {
-      id: "043c53ee-c870-41d9-a8a3-b218f3762cee",
-      cpfCnpj: "928.311.890-12",
-      nameProducer: "prucer mock",
-      nameFarm: "fazeenda mock",
-      city: "São paulo",
-      state: "São paulo",
-      totalFarmArea: 2000,
-      agriculturalArea: 1000,
-      vegetationArea: 1000,
-      plantedCrops: ["soja"],
-      createdAt: "2024-02-12T17:33:15.120Z",
-      updatedAt: "2024-02-12T17:33:15.120Z",
-    };
-
     producerRepositoryMock.getProducerByCpforCnpj.mockReturnValue(
       Promise.resolve(null),
     );
     producerRepositoryMock.create.mockReturnValue(
-      Promise.resolve(producerOutputMock),
+      Promise.resolve(producerOutputCreateMockSucess),
     );
 
-    const response = await createProducerService.execute(producerInputMock);
+    const response = await createProducerService.execute(
+      producerInputCreateMockSucess,
+    );
 
-    expect(response).toEqual(producerOutputMock);
+    expect(response).toEqual(producerOutputCreateMockSucess);
     expect(response).toHaveProperty("id");
 
     expect(producerRepositoryMock.getProducerByCpforCnpj).toHaveBeenCalled();
@@ -69,5 +52,57 @@ describe("Create producer", () => {
       1,
     );
     expect(producerRepositoryMock.create).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should not be able to create a new producer, because CPF invalid", async () => {
+    try {
+      await createProducerService.execute(producerInputCreateMockCpfInvalid);
+    } catch (err) {
+      expect((err as AppError).message).toBe("CPF invalid");
+    }
+  });
+
+  it("Should not be able to create a new producer, because CNPJ invalid", async () => {
+    try {
+      await createProducerService.execute(producerInputCreateMockCNPJInvalid);
+    } catch (err) {
+      expect((err as AppError).message).toBe("CNPJ invalid");
+    }
+  });
+
+  it("Should not be able to create a new producer, because CPF or CNPJ invalid", async () => {
+    try {
+      await createProducerService.execute(
+        producerInputCreateMockCPForCNPJIncomplete,
+      );
+    } catch (err) {
+      expect((err as AppError).message).toBe("CPF/CNPJ invalid");
+    }
+  });
+
+  it("Should not be able to create a new producer, because area farm is less of area agriculturalArea + vegetationArea", async () => {
+    try {
+      await createProducerService.execute(
+        producerInputCreateMockAreaFarmInvalid,
+      );
+    } catch (err) {
+      expect((err as AppError).message).toBe(
+        "agriculturalArea next to vegetationArea cannot be greater than the total area of the farm",
+      );
+    }
+  });
+
+  it("Should not be able to create a new producer, because producer already exists", async () => {
+    try {
+      producerRepositoryMock.getProducerByCpforCnpj.mockReturnValue(
+        Promise.resolve(producerOutputCreateMockSucess),
+      );
+
+      await createProducerService.execute(producerInputCreateMockSucess);
+
+      expect(producerRepositoryMock.getProducerByCpforCnpj).toHaveBeenCalled();
+    } catch (err) {
+      expect((err as AppError).message).toBe("Producer already exists");
+    }
   });
 });
