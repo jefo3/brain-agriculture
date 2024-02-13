@@ -1,0 +1,340 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Brain Agriculture Documentation",
+    "description": "This is an API Brain Agriculture",
+    "version": "1.0.0",
+    "contact": {
+      "email": "jeferson.goncalves.noronha@gmail.com"
+    }
+  },
+  "paths": {
+    "/producers" : {
+      "post" : {
+        "tags": ["Producer"],
+        "summary": "Create a Producer",
+        "description": "Create a new Producer",
+        "requestBody": {
+          "content" : {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpfCnpj": {
+                    "type" : "string"
+                  },
+                  "nameProducer": {
+                    "type": "string"
+                  },
+                  "nameFarm": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "totalFarmArea": {
+                    "type": "number"
+                  },
+                  "agriculturalArea": {
+                    "type": "number"
+                  },
+                  "vegetationArea": {
+                    "type": "number"
+                  },
+                  "plantedCrops": {
+                    "type":"array",
+                    "items": {
+                      "type": "string",
+                      "enum":["soja", "algodao", "cafe", "canaDeAcucar", "milho"]
+                    }
+                  }
+                },
+                "required": [
+                  "cpfCnpj",
+                  "nameProducer",
+                  "nameFarm",
+                  "city",
+                  "state",
+                  "totalFarmArea",
+                  "agriculturalArea",
+                  "vegetationArea",
+                  "plantedCrops"
+                ],
+                "example": {
+                  "cpfCnpj": "93.125.607/0001-89",
+                  "nameProducer": "name producer example",
+                  "nameFarm": "name farm example",
+                  "city": "São paulo",
+                  "state": "São paulo",
+                  "totalFarmArea": 2000,
+                  "agriculturalArea": 1000,
+                  "vegetationArea": 1000,
+                  "plantedCrops": ["soja"]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Producer already exists"
+          },
+          "400": {
+            "description": "agriculturalArea next to vegetationArea cannot be greater than the total area of the farm"
+          },
+          "422": {
+            "description": "Validation error. Possible reasons: Invalid CPF, Invalid CNPJ, Invalid CPF/CNPJ."
+          }
+          
+        }
+      },
+      "get" : {
+        "tags": ["Producer"],
+        "summary": "List all Producers",
+        "responses": {
+          "200": {
+            "description": "Succecs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "cpfCnpj": {
+                            "type": "string"
+                          },
+                          "nameProducer": {
+                            "type": "string"
+                          },
+                          "nameFarm": {
+                            "type": "string"
+                          },
+                          "city": {
+                            "type": "string"
+                          },
+                          "state": {
+                            "type": "string"
+                          },
+                          "totalFarmArea": {
+                            "type": "string"
+                          },
+                          "agriculturalArea": {
+                            "type": "string"
+                          },
+                          "vegetationArea": {
+                            "type": "string"
+                          },
+                          "plantedCrops": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "All Users",
+                  "data": [
+                    {
+                      "id": "9b2863a6-7785-4465-af2c-e4d5b3ea2d02",
+                      "cpfCnpj": "93.125.607/0001-89",
+                      "nameProducer": "prucer mock 5",
+                      "nameFarm": "fazeenda mock 5",
+                      "city": "São paulo",
+                      "state": "São paulo",
+                      "totalFarmArea": "2000",
+                      "agriculturalArea": "1000",
+                      "vegetationArea": "1000",
+                      "plantedCrops": [
+                        "soja"
+                      ],
+                      "createdAt": "2024-02-13T22:49:19.590Z",
+                      "updatedAt": "2024-02-13T22:49:19.590Z"
+                    }
+                  ]
+                }  
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producers/:id" : {
+      "put": {
+        "tags": ["Producer"],
+        "summary": "Update a producer",
+        "requestBody": {
+          "content" : {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cpfCnpj": {
+                    "type" : "string"
+                  },
+                  "nameProducer": {
+                    "type": "string"
+                  },
+                  "nameFarm": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "totalFarmArea": {
+                    "type": "number"
+                  },
+                  "agriculturalArea": {
+                    "type": "number"
+                  },
+                  "vegetationArea": {
+                    "type": "number"
+                  },
+                  "plantedCrops": {
+                    "type":"array",
+                    "items": {
+                      "type": "string",
+                      "enum":["soja", "algodao", "cafe", "canaDeAcucar", "milho"]
+                    }
+                  }
+                },
+                "example": {
+                  "cpfCnpj": "93.125.607/0001-89",
+                  "nameProducer": "name producer example update",
+                  "nameFarm": "name farm example update",
+                  "city": "São paulo",
+                  "state": "São paulo",
+                  "totalFarmArea": 2000,
+                  "agriculturalArea": 1000,
+                  "vegetationArea": 1000,
+                  "plantedCrops": ["soja"]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "409": {
+            "description": "Producer Not Exists"
+          },
+          "400": {
+            "description": "agriculturalArea next to vegetationArea cannot be greater than the total area of the farm"
+          },
+          "422": {
+            "description": "Validation error. Possible reasons: Invalid CPF, Invalid CNPJ, Invalid CPF/CNPJ."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Producer"],
+        "summary": "Delete a producer",
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          },
+          "409": {
+            "description": "Producer Not Exists"
+          }
+        }
+      }
+    },
+    "producers/dashboard" : {
+      "get": {
+        "tags": ["Dashboard"],
+        "summary": "List a data of dashboard",
+        "description":"List of calculated data for the dashboard",
+        "responses": {
+          "200": {
+            "description": "Succecs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "totalNumberOfFarms": {
+                            "type": "number"
+                          },
+                          "totalAreaOfFarmsInHectares": {
+                            "type": "number"
+                          },
+                          "percentageByLandUse": {
+                            "type": "number"
+                          },
+                          "percentageByState": {
+                            "type": "object"
+                          },
+                          "percentageByCrop": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Dashboard of producers",
+                    "data": {
+                      "totalNumberOfFarms": 1,
+                      "totalAreaOfFarmsInHectares": 2000,
+                      "percentageByLandUse": 100,
+                      "percentageByState": {
+                        "São paulo": 100
+                      },
+                      "percentageByCrop": {
+                        "soja": 100,
+                        "withoutCrop": 0
+                      }
+                    }
+                  }
+                }
+                
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+ 
+}
