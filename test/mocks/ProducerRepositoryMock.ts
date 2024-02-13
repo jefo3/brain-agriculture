@@ -1,6 +1,5 @@
 import { IProducerRepository } from "@repositories/IProducersRepository";
 
-// Crie uma classe que estende a ProducerRepository e substitua os métodos necessários
 export class ProducerRepositoryMock implements IProducerRepository {
   create = jest.fn();
   list = jest.fn();
