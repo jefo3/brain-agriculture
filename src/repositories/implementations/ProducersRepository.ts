@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { CreateProducerDTO } from "@dtos/createProducerDTO";
 import { Producer } from "@entities/ProducerEntity";
 import { PrismaClient } from "@prisma/client";
@@ -81,7 +82,7 @@ export class ProducersRepository implements IProducerRepository {
       },
     });
 
-    return totalArea._sum.totalFarmArea.toNumber();
+    return totalArea._sum.totalFarmArea?.toNumber();
   }
 
   async getGroupByState(): Promise<IGroupByState[]> {
@@ -104,6 +105,7 @@ export class ProducersRepository implements IProducerRepository {
       _count: true,
     });
 
+    console.log("111->", groupByCrops);
     return groupByCrops;
   }
 
@@ -116,8 +118,8 @@ export class ProducersRepository implements IProducerRepository {
     });
 
     const total =
-      areaLanUse._sum.agriculturalArea.toNumber() +
-      areaLanUse._sum.vegetationArea.toNumber();
+      areaLanUse._sum.agriculturalArea?.toNumber() +
+      areaLanUse._sum.vegetationArea?.toNumber();
 
     return total;
   }
