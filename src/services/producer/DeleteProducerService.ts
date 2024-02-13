@@ -15,7 +15,7 @@ export class DeleteProducerService {
       await this.producersRepository.getProducerById(id);
 
     if (!producerAlreadyExists) {
-      throw new AppError("Producer Not Exists");
+      throw new AppError("Producer Not Exists", 409);
     }
 
     const producer = await this.producersRepository.delete(id);

@@ -31,7 +31,7 @@ export class CreateProducerService {
       await this.producersRepository.getProducerByCpforCnpj(data.cpfCnpj);
 
     if (producerAlreadyExists) {
-      throw new AppError("Producer already exists");
+      throw new AppError("Producer already exists", 409);
     }
 
     const producer = this.producersRepository.create(data);

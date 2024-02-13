@@ -22,7 +22,7 @@ export class UpdateProducerService {
       await this.producersRepository.getProducerById(id);
 
     if (!producerAlreadyExists) {
-      throw new AppError("Producer Not Exists");
+      throw new AppError("Producer Not Exists", 409);
     }
 
     const farmArea =
