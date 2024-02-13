@@ -7,10 +7,7 @@ services:
     restart: always
     ports:
         - 5433:5432
-    environment:
-      - POSTGRES_USER=brain
-      - POSTGRES_PASSWORD=Brain@123
-      - POSTGRES_DB=brain_agriculture
+    env_file: .env
     volumes:
       - ./pg_data:/data/postgres
     networks:
