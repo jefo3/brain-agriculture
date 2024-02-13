@@ -100,14 +100,15 @@ export class DashboardProducerService {
   }
 
   private calcultePercentageOfCrop(groupByCrop: IGroupByCrop[]) {
-    const totalCountByCrop = groupByCrop.reduce(
-      (acc, item) => acc + item._count,
+    const cropsQuantity = this.calculateQuantityCrops(groupByCrop);
+
+    const totalCountByCrop = Array.from(cropsQuantity.values()).reduce(
+      (acc, value) => acc + value,
       0,
     );
 
-    const cropsQuantity = this.calculateQuantityCrops(groupByCrop);
-
     let totalCrops = 0;
+
     cropsQuantity.forEach((value, key) => {
       totalCrops += value;
 
