@@ -64,7 +64,7 @@ export const producerInputCreateMockCPForCNPJIncomplete: CreateProducerDTO = {
 };
 
 export const producerInputCreateMockAreaFarmInvalid: CreateProducerDTO = {
-  cpfCnpj: "250.039.861",
+  cpfCnpj: "928.311.890-12",
   nameProducer: "prucer mock",
   nameFarm: "fazeenda mock",
   city: "São paulo",
@@ -73,16 +73,4 @@ export const producerInputCreateMockAreaFarmInvalid: CreateProducerDTO = {
   agriculturalArea: 1000,
   vegetationArea: 3000,
   plantedCrops: ["soja"],
-};
-
-export const producerInputCreateMockCropInvalid = {
-  cpfCnpj: "928.311.890-12",
-  nameProducer: "prucer mock",
-  nameFarm: "fazeenda mock",
-  city: "São paulo",
-  state: "São paulo",
-  totalFarmArea: 2000,
-  agriculturalArea: 1000,
-  vegetationArea: 1000,
-  plantedCrops: ["soja", "aa"],
 };

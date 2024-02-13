@@ -64,7 +64,3 @@ export const producerInputUpdateMockAreaFarmInvalid: UpdateProducerDTO = {
   agriculturalArea: 4000,
   vegetationArea: 3000,
 };
-
-export const producerInputUpdateMockCropInvalid = {
-  plantedCrops: ["soja", "aa"],
-};
