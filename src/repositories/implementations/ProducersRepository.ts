@@ -105,7 +105,6 @@ export class ProducersRepository implements IProducerRepository {
       _count: true,
     });
 
-    console.log("111->", groupByCrops);
     return groupByCrops;
   }
 
