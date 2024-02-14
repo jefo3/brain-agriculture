@@ -23,7 +23,7 @@
 * Tsyringe
 
 # Requisitos para executar o projeto
-* [NodeJs]((https://nodejs.org/)): Certifique-se de instalar a versão 16 ou superior.
+* [NodeJs](https://nodejs.org/): Certifique-se de instalar a versão 16 ou superior.
 
 * [Yarn](https://yarnpkg.com/) ou [NPM](https://www.npmjs.com/package/npm): O Yarn geralmente é instalado junto com o Node.js
 
